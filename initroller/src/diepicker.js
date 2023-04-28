@@ -3,14 +3,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const DiePicker = ({ callBack }) => {
+const DiePicker = ({ callBack, id }) => {
     const [skill, setSkill] = useState(0);
     const [proficiency, setProficiency] = useState(0);
     const [name, setName] = useState("DiePicker");
 
     useEffect(() => {
-        callBack(skill, proficiency, name);
-    }, [skill, proficiency]);
+        callBack(id, skill, proficiency, name);
+    }, [skill, proficiency, id, name, callBack]);
 
     // two inputs that increment the state variables 
     const incrementSkill = () => {
