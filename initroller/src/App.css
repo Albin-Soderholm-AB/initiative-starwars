@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+/* css to arrange the DiePickers in a grid pattern and background color yellow*/
+.DiePickerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
