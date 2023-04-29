@@ -31,7 +31,7 @@ const Result = ({ result }) => {
 
                     // img tag that displays the advantage image
 
-                    <div className='displayDice'><img src={nameMap[index]}></img>: {value}</div>
+                    <div className='displayDice'><img src={nameMap[index]} alt={nameMap[index]}></img>: {value}</div>
                 ))}
             </div>
         </div>
