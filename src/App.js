@@ -16,16 +16,14 @@ function App() {
 
   const [showPickers, setShowPickers] = useState(true);
 
-  const [update, setUpdate] = useState(0);
 
   const callBack = useCallback((id, skill, proficiency, name) => {
     setDiePickers(diePickers.set(id, {id: id, skill: skill, proficiency: proficiency, name: name}));
-  }, [diePickers, update]);
+  }, [diePickers]);
 
   const rollCallBack = useCallback(() => {
     setShowPickers(false);
-    setUpdate(update + 1);
-  }, [update]);
+  }, []);
 
   useEffect (() => {
   }, [showPickers, diePickers]);
