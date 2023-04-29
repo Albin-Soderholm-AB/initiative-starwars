@@ -24,9 +24,9 @@ const Result = ({ result }) => {
 
 
     return (
-        <div>  
+        <div className='multiDiceDisplay'>  
             <p>{result.name}</p>
-            <div>
+            <div className='multiDiceDisplay'>
                 {result.rolls.map((value, index) => (
 
                     // img tag that displays the advantage image

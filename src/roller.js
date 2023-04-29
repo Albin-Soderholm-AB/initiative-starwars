@@ -89,6 +89,7 @@ const Roller = ({ diePickers }) => {
 
     return (
         <div>
+            <button onClick={rollDice}>Roll</button>
             <h1>Result</h1>
             <div>
             {Array.from(results.values()).sort(sortFunc).map((result) => (
@@ -106,7 +107,6 @@ const Roller = ({ diePickers }) => {
                     <p>{diePicker.proficiency}</p>
                 </div>
             ))};
-            <button onClick={rollDice}>Roll</button>
         </div>
     );
 }
