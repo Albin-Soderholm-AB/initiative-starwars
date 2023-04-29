@@ -1,7 +1,7 @@
 // functional component called result
 
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const Result = ({ result }) => {
 
