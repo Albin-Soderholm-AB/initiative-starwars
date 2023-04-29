@@ -37,22 +37,24 @@ function App() {
     <div className="App">
       <header className="App-header">
       <meta name="viewport" content="width=device-width,initial-scale=1"/>
-      
+        <h1><a href="/">heading</a></h1>
+
         <div>
           <Roller diePickers={diePickers} callBack={rollCallBack} showResult={!showPickers}/>
         </div>
         <div className="DiePickerGrid">
-          <DiePicker callBack={callBack} show={showPickers} id="1" initName="Goon"/>
-          <DiePicker callBack={callBack} show = {showPickers} id="2" initName="Baddie"/>
+          <DiePicker callBack={callBack} show={showPickers} id="1" initName="Goon" initProf={3}/>
+          <DiePicker callBack={callBack} show = {showPickers} id="2" initName="Baddie" initProf={2}/>
           <DiePicker callBack={callBack} show = {showPickers} id="3" initName="Boss"/>
           <DiePicker callBack={callBack} show = {showPickers} id="4" initName="Slapboi"/>
-          <DiePicker callBack={callBack} show = {showPickers} id="5" initName="Goomba"/>
+          <DiePicker callBack={callBack} show = {showPickers} id="5" initName="Goomboi Advance"/>
+          <DiePicker callBack={callBack} show = {showPickers} id="5" initName="Goomboi Color"/>
 
-          <DiePicker callBack={callBack} show = {showPickers} id="6" initName="P1" initSkill={1}/>
-          <DiePicker callBack={callBack} show = {showPickers} id="7" initName="P2" initSkill={1}/>
-          <DiePicker callBack={callBack} show = {showPickers} id="8" initName="P3" initSkill={1}/>
-          <DiePicker callBack={callBack} show = {showPickers} id="9" initName="P4" initSkill={1}/>
-          <DiePicker callBack={callBack} show = {showPickers} id="10" initName="P5" initSkill={1}/>
+          <DiePicker callBack={callBack} show = {false} id="6" initName="P1" initSkill={1}/>
+          <DiePicker callBack={callBack} show = {false} id="7" initName="P2" initSkill={1}/>
+          <DiePicker callBack={callBack} show = {false} id="8" initName="P3" initSkill={1}/>
+          <DiePicker callBack={callBack} show = {false} id="9" initName="P4" initSkill={1}/>
+          <DiePicker callBack={callBack} show = {false} id="10" initName="P5" initSkill={1}/>
 
 
         

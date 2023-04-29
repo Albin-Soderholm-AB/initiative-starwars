@@ -74,17 +74,17 @@ const Roller = ({ diePickers, callBack, showResult }) => {
         let rolls1 = res1.rolls;
         let rolls2 = res2.rolls;
 
-        if (rolls1[3] + rolls1[1] > rolls2[3] + rolls2[1]) {
+        if (rolls1[triumph] + rolls1[success] > rolls2[triumph] + rolls2[success]) {
             return -1;
-        } else if (rolls1[3] + rolls1[1] < rolls2[3] + rolls2[1]) {
+        } else if (rolls1[triumph] + rolls1[success] < rolls2[triumph] + rolls2[success]) {
             return 1;
-        } else if (rolls1[2] > rolls2[2]) {
+        } else if (rolls1[advantage] > rolls2[advantage]) {
             return -1;
-        } else if (rolls1[2] < rolls2[2]) {
+        } else if (rolls1[advantage] < rolls2[advantage]) {
             return 1;
-        } else if (rolls1[3] > rolls2[3]) {
+        } else if (rolls1[triumph] > rolls2[triumph]) {
             return -1;
-        } else if (rolls1[3] < rolls2[3]) {
+        } else if (rolls1[triumph] < rolls2[triumph]) {
             return 1;
         } else {
             return -1;
