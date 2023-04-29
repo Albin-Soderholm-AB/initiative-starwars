@@ -73,3 +73,11 @@
   width: 100%;
   height: 100%;
 }
+
+/* css for small button panel with no spacing between buttons */
+.buttonPanel {
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+}

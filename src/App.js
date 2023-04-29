@@ -19,9 +19,7 @@ function App() {
   const [update, setUpdate] = useState(0);
 
   const callBack = useCallback((id, skill, proficiency, name) => {
-    console.log(id + ": " + name + " skill: " + skill + " proficiency: " + proficiency);
     setDiePickers(diePickers.set(id, {id: id, skill: skill, proficiency: proficiency, name: name}));
-    setUpdate(update + 1);
   }, [diePickers, update]);
 
   const rollCallBack = useCallback(() => {

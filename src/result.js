@@ -19,7 +19,6 @@ const Result = ({ result }) => {
     };
 
     useEffect(() => {
-        console.log("Resyt: " + JSON.stringify(result));
     }, [result]);
 
 

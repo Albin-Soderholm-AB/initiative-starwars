@@ -10,15 +10,15 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) =>
 
     useEffect(() => {
         callBack(id, skill, proficiency, name);
-    }, [skill, proficiency, id, name, callBack]);
+    }, [skill, proficiency, name, id, callBack]);
 
     // two inputs that increment the state variables 
-    const incrementSkill = () => {
-        setSkill(skill + 1);
+    const incrementSkill = (val) => {
+        setSkill(skill + val);
     }
 
-    const incrementProficiency = () => {
-        setProficiency(proficiency + 1);
+    const incrementProficiency = (val) => {
+        setProficiency(proficiency + val);
     }
 
     if (!show) {
@@ -31,7 +31,16 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) =>
 
             <p>Skill: {skill}</p>
             <p>Proficiency: {proficiency}</p>
-            <button onClick={incrementSkill}>Skill</button>
+            <div className='buttonPanel'>
+                <p>Skill</p>
+                <button onClick={e => incrementSkill(-1)}>-</button>
+                <button onClick={e => incrementSkill(1)}>+</button>
+            </div>
+            <div>
+                <p>Proficiency</p>
+                <button onClick={e => incrementProficiency(-1)}>-</button>
+                <button onClick={e => incrementProficiency(1)}>+</button>
+            </div>
             <button onClick={incrementProficiency}>Proficiency</button>
         </div>
     );
