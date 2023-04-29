@@ -3,10 +3,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const DiePicker = ({ callBack, id, show }) => {
-    const [skill, setSkill] = useState(0);
-    const [proficiency, setProficiency] = useState(0);
-    const [name, setName] = useState("DiePicker");
+const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) => {
+    const [skill, setSkill] = useState(initSkill);
+    const [proficiency, setProficiency] = useState(initProf);
+    const [name, setName] = useState(initName);
 
     useEffect(() => {
         callBack(id, skill, proficiency, name);

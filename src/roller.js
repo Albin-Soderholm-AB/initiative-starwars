@@ -50,12 +50,18 @@ const Roller = ({ diePickers, callBack, showResult }) => {
         Array.from(diePickers.values()).forEach((diePicker) => {
             let skillRolls = [];
             let proficiencyRolls = [];
+
+            if (diePicker.skill === 0 && diePicker.proficiency === 0) {
+                return;
+            }
+
             for (let i = 0; i < diePicker.skill; i++) {
                 skillRolls.push(Math.floor(Math.random() * 8));
             }
             for (let i = 0; i < diePicker.proficiency; i++) {
                 proficiencyRolls.push(Math.floor(Math.random() * 12));
             }
+
             setResults(results.set(diePicker.id, {name: diePicker.name, id: diePicker.id, rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls)), flag: Math.random()}));
         });
 
