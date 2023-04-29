@@ -26,22 +26,19 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) =>
     }
 
     return (
-        <div>
+        <div className='diePicker'>
             <h1><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></h1>
 
-            <p>Skill: {skill}</p>
-            <p>Proficiency: {proficiency}</p>
             <div className='buttonPanel'>
-                <p>Skill</p>
+                <p>Skill: {skill}</p>
                 <button onClick={e => incrementSkill(-1)}>-</button>
                 <button onClick={e => incrementSkill(1)}>+</button>
             </div>
-            <div>
-                <p>Proficiency</p>
+            <div className='buttonPanel'>
+                <p>Proficiency: {proficiency}</p>
                 <button onClick={e => incrementProficiency(-1)}>-</button>
                 <button onClick={e => incrementProficiency(1)}>+</button>
             </div>
-            <button onClick={incrementProficiency}>Proficiency</button>
         </div>
     );
 }
