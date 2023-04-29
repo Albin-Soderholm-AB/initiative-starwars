@@ -31,6 +31,20 @@ const Roller = ({ diePickers }) => {
         return dieRolls.map(v => proficiencyMap[v]);
     };
 
+    const calcCount = (outcome1, outcome2) => {
+        let count = [0, 0, 0, 0];
+        for (const v of outcome1) {
+            count[v] = count[v] + 1;
+        }
+
+        for (const v of outcome2) {
+            count[v] = count[v] + 1;
+        }
+        console.log(count);
+        return count;
+        
+    };
+
     const rollDice = () => {
         
         Array.from(diePickers.values()).forEach((diePicker) => {
@@ -42,12 +56,33 @@ const Roller = ({ diePickers }) => {
             for (let i = 0; i < diePicker.proficiency; i++) {
                 proficiencyRolls.push(Math.floor(Math.random() * 12));
             }
-            setResults(results.set(diePicker.id, {name: diePicker.name, id: diePicker.id, skill: mapSkillToSwDice(skillRolls), proficiency: mapProfToSwDice(proficiencyRolls), flag: Math.random()}));
+            setResults(results.set(diePicker.id, {name: diePicker.name, id: diePicker.id, rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls)), flag: Math.random()}));
         });
 
         setUpdate(update + 1);
         
     }
+
+    const sortFunc = (res1, res2) => {
+        let rolls1 = res1.rolls;
+        let rolls2 = res2.rolls;
+
+        if (rolls1[3] + rolls1[1] > rolls2[3] + rolls2[1]) {
+            return -1;
+        } else if (rolls1[3] + rolls1[1] < rolls2[3] + rolls2[1]) {
+            return 1;
+        } else if (rolls1[2] > rolls2[2]) {
+            return -1;
+        } else if (rolls1[2] < rolls2[2]) {
+            return 1;
+        } else if (rolls1[3] > rolls2[3]) {
+            return -1;
+        } else if (rolls1[3] < rolls2[3]) {
+            return 1;
+        } else {
+            return -1;
+        }
+    };
 
     useEffect(() => {
     }, [diePickers, results, update]);
@@ -56,7 +91,7 @@ const Roller = ({ diePickers }) => {
         <div>
             <h1>Result</h1>
             <div>
-            {Array.from(results.values()).map((result) => (
+            {Array.from(results.values()).sort(sortFunc).map((result) => (
                 
                 <Result result={result} key={result.id}></Result>
                 

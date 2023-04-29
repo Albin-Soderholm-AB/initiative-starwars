@@ -25,6 +25,7 @@ function App() {
       <header className="App-header">
         <div className='DiePickerGrid'>
         <DiePicker callBack={callBack} id="1"/>
+        <DiePicker callBack={callBack} id="2"/>
         <Roller diePickers={diePickers}/>
         </div>
         
