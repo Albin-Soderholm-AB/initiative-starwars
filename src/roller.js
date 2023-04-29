@@ -7,7 +7,7 @@ import Result from './result.js';
 
 
 
-const Roller = ({ diePickers }) => {
+const Roller = ({ diePickers, callBack, showResult }) => {
 
     const [results, setResults] = useState(new Map());
 
@@ -60,6 +60,7 @@ const Roller = ({ diePickers }) => {
         });
 
         setUpdate(update + 1);
+        callBack();
         
     }
 
@@ -87,28 +88,26 @@ const Roller = ({ diePickers }) => {
     useEffect(() => {
     }, [diePickers, results, update]);
 
-    return (
-        <div>
-            <button onClick={rollDice}>Roll</button>
-            <h1>Result</h1>
+    if (showResult) {
+        return (
             <div>
-            {Array.from(results.values()).sort(sortFunc).map((result) => (
-                
-                <Result result={result} key={result.id}></Result>
-                
-            ))}
-            </div>
-
-            <h1>Roller</h1>
-            {Array.from(diePickers.values()).map((diePicker) => (
+                <h1>Result</h1>
                 <div>
-                    <p>{diePicker.name}</p>
-                    <p>{diePicker.skill}</p>
-                    <p>{diePicker.proficiency}</p>
+                {Array.from(results.values()).sort(sortFunc).map((result) => (
+                    
+                    <Result result={result} key={result.id}></Result>
+                    
+                ))}
                 </div>
-            ))};
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <div>
+            <button onClick={rollDice}>Roll</button>
+            </div>
+        );
+    }
 }
 
 // export default Roller;

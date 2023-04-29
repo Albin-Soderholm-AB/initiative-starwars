@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const DiePicker = ({ callBack, id }) => {
+const DiePicker = ({ callBack, id, show }) => {
     const [skill, setSkill] = useState(0);
     const [proficiency, setProficiency] = useState(0);
     const [name, setName] = useState("DiePicker");
@@ -19,6 +19,10 @@ const DiePicker = ({ callBack, id }) => {
 
     const incrementProficiency = () => {
         setProficiency(proficiency + 1);
+    }
+
+    if (!show) {
+        return null;
     }
 
     return (
