@@ -12,10 +12,10 @@ import triumph from './assets/images/triumph.png';
 const Result = ({ result }) => {
 
     const nameMap = {
-        0: blank,
+        3: blank,
         1: success,
         2: advantage,
-        3: triumph
+        0: triumph
     };
 
     useEffect(() => {

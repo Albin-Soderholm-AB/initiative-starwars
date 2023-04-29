@@ -13,10 +13,10 @@ const Roller = ({ diePickers }) => {
 
     const [update, setUpdate] = useState(0);
 
-    const blank = 0;
+    const blank = 3;
     const success = 1;
     const advantage = 2;
-    const triumph = 3;
+    const triumph = 0;
 
 
     const skillMap = [blank, success, success, [success, success], advantage, advantage, [success, advantage], [advantage, advantage]];
@@ -40,7 +40,7 @@ const Roller = ({ diePickers }) => {
         for (const v of outcome2) {
             count[v] = count[v] + 1;
         }
-        console.log(count);
+        
         return count;
         
     };
