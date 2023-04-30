@@ -24,11 +24,11 @@ const Roller = ({ diePickers, callBack, showResult }) => {
 
 
     const mapSkillToSwDice = (dieRolls) => {
-        return dieRolls.map(v => skillMap[v]);
+        return dieRolls.map(v => skillMap[v]).flat();
     };
 
     const mapProfToSwDice = (dieRolls) => {
-        return dieRolls.map(v => proficiencyMap[v]);
+        return dieRolls.map(v => proficiencyMap[v]).flat();
     };
 
     const calcCount = (outcome1, outcome2) => {

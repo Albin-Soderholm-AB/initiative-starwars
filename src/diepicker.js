@@ -27,7 +27,7 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) =>
 
     return (
         <div className='diePicker'>
-            <h1><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></h1>
+            <p><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></p>
 
             <div className='buttonPanel'>
                 <p>Skill: {skill}</p>
