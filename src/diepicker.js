@@ -31,13 +31,13 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) =>
 
             <div className='buttonPanel'>
                 <p>Skill: {skill}</p>
-                <button onClick={e => incrementSkill(-1)}>-</button>
-                <button onClick={e => incrementSkill(1)}>+</button>
+                <button class='button' onClick={e => incrementSkill(-1)}>-</button>
+                <button class='button' onClick={e => incrementSkill(1)}>+</button>
             </div>
             <div className='buttonPanel'>
                 <p>Proficiency: {proficiency}</p>
-                <button onClick={e => incrementProficiency(-1)}>-</button>
-                <button onClick={e => incrementProficiency(1)}>+</button>
+                <button class='button' onClick={e => incrementProficiency(-1)}>-</button>
+                <button class='button' onClick={e => incrementProficiency(1)}>+</button>
             </div>
         </div>
     );

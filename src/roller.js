@@ -110,7 +110,7 @@ const Roller = ({ diePickers, callBack, showResult }) => {
     } else {
         return (
             <div>
-            <button onClick={rollDice}>Roll</button>
+            <button class='button' onClick={rollDice}>Roll</button>
             </div>
         );
     }
