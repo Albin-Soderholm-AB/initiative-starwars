@@ -33,7 +33,9 @@ function App() {
     <div className="App">
       <header className="App-header">
       <meta name="viewport" content="width=device-width,initial-scale=1"/>
-        <h1><a href="/">Star Wars Initiative</a></h1>
+        <div className='title'>
+          <p><a href="/">Star Wars Initiative</a></p>
+        </div>
 
         <div>
           <Roller diePickers={diePickers} callBack={rollCallBack} showResult={!showPickers}/>

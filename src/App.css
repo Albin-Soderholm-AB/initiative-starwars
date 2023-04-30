@@ -40,6 +40,7 @@
 /* css to arrange the DiePickers in a grid pattern and background color yellow*/
 .DiePickerGrid {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 }
@@ -59,8 +60,8 @@
 }
 
 .displayDice img {
-  width: 50px;
-  height: 50px;
+  width: 50%;
+  height: 50%;
 }
 
 /* css to arrange divs in multiDiceDisplay without line breaks */
@@ -74,6 +75,13 @@
   height: 100%;
 }
 
+.multiDiceDisplay p {
+  margin: 0;
+  padding: 0;
+  max-width: 20%;
+  min-width: 20%;
+}
+
 /* css for small button panel with no spacing between buttons */
 .buttonPanel {
   width: 100%;
@@ -81,8 +89,25 @@
 }
 
 .buttonPanel button {
-  width: 50%;
+  width: 45%;
   height: 100%;
+}
+
+input {
+  border: 5px solid white; 
+  -webkit-box-shadow: 
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1); 
+  -moz-box-shadow: 
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1); 
+  box-shadow: 
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1); 
+  padding: 15px;
+  background: rgba(255,255,255,0.5);
+  margin: 0 0 10px 0;
+  width: 55%;
 }
 
 .diePicker {
@@ -98,3 +123,24 @@ a:visited { text-decoration: none; color:red; }
 a:hover { text-decoration: none; color:blue; }
 a:focus { text-decoration: none; color:yellow; }
 a:hover, a:active { text-decoration: none; color:black }
+
+.title {
+  font-size: 2em;
+  font-weight: bold;
+  font-family: "Papyrus";
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: calc(1rem + 3vw);
+  container-name: sidebar;
+}
+
+@container sidebar (min-width: 700px) {
+  .module h2 {
+    font-size: 2em;
+  }
+}
+
+* {
+  font-family: "Papyrus";
+}
