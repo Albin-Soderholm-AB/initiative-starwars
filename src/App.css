@@ -188,3 +188,7 @@ a:hover, a:active { text-decoration: none; color:black }
 .player {
   color: green;
 }
+
+.ally {
+  color: gray;
+}

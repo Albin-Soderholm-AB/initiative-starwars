@@ -7,7 +7,7 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
     const [skill, setSkill] = useState(initSkill);
     const [proficiency, setProficiency] = useState(initProf);
     const [name, setName] = useState(initName);
-    const [type] = useState(initType);
+    const [type, setType] = useState(initType);
 
     useEffect(() => {
         callBack(id, skill, proficiency, name, type);
@@ -29,7 +29,7 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
     return (
         <div className='diePicker'>
             <p><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></p>
-
+            <input type="checkbox" checked={type === "ally"} onChange={e => setType(e.currentTarget.checked ? "ally" : "enemy")}></input>
             <div className='buttonPanel'>
                 <p>Skill: {skill}</p>
                 <button className='button' onClick={e => incrementSkill(-1)}>-</button>
