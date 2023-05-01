@@ -28,8 +28,10 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
 
     return (
         <div className='diePicker'>
-            <p><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></p>
-            <input type="checkbox" checked={type === "ally"} onChange={e => setType(e.currentTarget.checked ? "ally" : "enemy")}></input>
+            <div className="metainfo">
+                <p><input type="text" value={name} onChange={e => setName(e.currentTarget.value)}></input></p>
+                <input type="checkbox" checked={type === "ally"} onChange={e => setType(e.currentTarget.checked ? "ally" : "enemy")}></input>
+            </div>
             <div className='buttonPanel'>
                 <p>Skill: {skill}</p>
                 <button className='button' onClick={e => incrementSkill(-1)}>-</button>
