@@ -24,7 +24,7 @@ const Result = ({ result }) => {
 
     return (
         <div className='multiDiceDisplay'>  
-            <p>{result.name}</p>
+            <p className={result.type}>{result.name}</p>
             <div className='multiDiceDisplay'>
                 {result.rolls.map((value, index) => (
 

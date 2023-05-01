@@ -3,14 +3,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0 }) => {
+const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, initType="enemy" }) => {
     const [skill, setSkill] = useState(initSkill);
     const [proficiency, setProficiency] = useState(initProf);
     const [name, setName] = useState(initName);
+    const [type] = useState(initType);
 
     useEffect(() => {
-        callBack(id, skill, proficiency, name);
-    }, [skill, proficiency, name, id, callBack]);
+        callBack(id, skill, proficiency, name, type);
+    }, [skill, proficiency, name, id, callBack, type]);
 
     // two inputs that increment the state variables 
     const incrementSkill = (val) => {

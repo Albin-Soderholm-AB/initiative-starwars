@@ -180,3 +180,11 @@ a:hover, a:active { text-decoration: none; color:black }
     font-size: 2em;
   }
 }
+
+.enemy {
+  color: red;
+}
+
+.player {
+  color: green;
+}
