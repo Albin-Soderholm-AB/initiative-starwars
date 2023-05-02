@@ -30,7 +30,7 @@ const Page = ( { cool } ) => {
 
     return (
         <div>
-            <div>
+            <div className="DiePicker">
                 <Roller diePickers={diePickers} callBack={rollCallBack} showResult={!showPickers} />
             </div>
             <div className="DiePickerGrid">

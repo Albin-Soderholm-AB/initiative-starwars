@@ -97,7 +97,6 @@ const Roller = ({ diePickers, callBack, showResult }) => {
     if (showResult) {
         return (
             <div>
-                <h1>Result</h1>
                 <div>
                 {Array.from(results.values()).sort(sortFunc).map((result) => (
                     
