@@ -45,10 +45,10 @@ const Result = ({ result }) => {
         </div>
         {show && 
         <div className='multiDiceDisplay'>
-            <p className={result.type}>Dice rolled</p>
+            <p className={result.type}></p>
             <div className='dieLine'>
-                <div className='displayDice'>Skill dice: {result.skillDice}</div>
-                <div className='displayDice'>Proficiency dice: {result.profDice}</div>
+                <div className='displayDice'>Skill: {result.skillDice}</div>
+                <div className='displayDice'>Proficiency: {result.profDice}</div>
             </div>
             </div>}
         </div>
