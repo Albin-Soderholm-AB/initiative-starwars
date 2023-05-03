@@ -1,7 +1,7 @@
 // functional component called result
 
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import blank from './assets/images/blank.png';
 import success from './assets/images/success.png';
@@ -21,18 +21,36 @@ const Result = ({ result }) => {
     useEffect(() => {
     }, [result]);
 
+    const [show, setShow] = useState(false);
+
+    const showDetails = () => {
+        setShow(!show);
+    };
+
 
     return (
-        <div className='multiDiceDisplay'>  
+        <div>
+        <div className='multiDiceDisplay' onClick={() => showDetails()}>  
             <p className={result.type}>{result.name}</p>
-            <div className='multiDiceDisplay'>
+            <div className='dieLine'>
                 {result.rolls.map((value, index) => (
 
                     // img tag that displays the advantage image
-
                     <div className='displayDice'><img src={nameMap[index]} alt={nameMap[index]}></img>: {value}</div>
+                    
                 ))}
+            
             </div>
+            
+        </div>
+        {show && 
+        <div className='multiDiceDisplay'>
+            <p className={result.type}>Dice rolled</p>
+            <div className='dieLine'>
+                <div className='displayDice'>Skill dice: {result.skillDice}</div>
+                <div className='displayDice'>Proficiency dice: {result.profDice}</div>
+            </div>
+            </div>}
         </div>
     )
 };

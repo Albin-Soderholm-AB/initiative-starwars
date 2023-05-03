@@ -13,7 +13,7 @@ export const SidebarData = [
   {
     title: "Cool",
     path: "/cool",
-    icon: <FaIcons.FaSkiing/>,
+    icon: <FaIcons.FaSkiing />,
     cName: "nav-text"
   }
 ];
