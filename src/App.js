@@ -33,6 +33,7 @@ function App() {
             </Route>
             <Route path="/" element={<Page></Page>}>
             </Route>
+            <Route path="/shared" element={<Page useStorage></Page>}></Route>
           </Routes>
         </BrowserRouter>
 

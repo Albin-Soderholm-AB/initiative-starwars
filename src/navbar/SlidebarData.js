@@ -15,5 +15,11 @@ export const SidebarData = [
     path: "/cool",
     icon: <FaIcons.FaSkiing />,
     cName: "nav-text"
+  },
+  {
+    title: "Shared",
+    path: "/shared",
+    icon: <FaIcons.FaShareAlt />,
+    cName: "nav-text"
   }
 ];

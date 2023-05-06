@@ -6,7 +6,7 @@ import DiePicker from './diepicker';
 import Roller from './roller';
 
 
-const Page = ( { cool } ) => {
+const Page = ( { cool, useStorage=false } ) => {
 
     const [diePickers, setDiePickers] = useState(new Map());
 
@@ -31,7 +31,7 @@ const Page = ( { cool } ) => {
     return (
         <div>
             <div className="DiePicker">
-                <Roller diePickers={diePickers} callBack={rollCallBack} showResult={!showPickers} />
+                <Roller diePickers={diePickers} callBack={rollCallBack} showResultInit={!showPickers} useStorage={useStorage} />
             </div>
             <div className="DiePickerGrid">
                 <DiePicker callBack={callBack} show={showPickers} id="1" initName="Bad 1" />

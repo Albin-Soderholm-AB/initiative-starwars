@@ -3,15 +3,22 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Result from './result.js';
+import { saveState, getState } from './api/api.js';
 
 
 
 
-const Roller = ({ diePickers, callBack, showResult }) => {
+const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) => {
 
     const [results, setResults] = useState(new Map());
 
     const [update, setUpdate] = useState(0);
+
+    const [lockOut, setLockOut] = useState(false);
+
+    const [showResult, setShowResult] = useState(showResultInit);
+
+    const [waiting, setWaiting] = useState(false);
 
     const blank = 3;
     const success = 1;
@@ -40,13 +47,15 @@ const Roller = ({ diePickers, callBack, showResult }) => {
         for (const v of outcome2) {
             count[v] = count[v] + 1;
         }
-        
+
         return count;
-        
+
     };
 
+    
+
     const rollDice = () => {
-        
+
         Array.from(diePickers.values()).forEach((diePicker) => {
             let skillRolls = [];
             let proficiencyRolls = [];
@@ -62,14 +71,17 @@ const Roller = ({ diePickers, callBack, showResult }) => {
                 proficiencyRolls.push(Math.floor(Math.random() * 12));
             }
 
-            setResults(results.set(diePicker.id, {name: diePicker.name, type: diePicker.type, id: diePicker.id, 
-                rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls)), 
-                skillDice: diePicker.skill, profDice: diePicker.proficiency, flag: Math.random()}));
+            setResults(results.set(diePicker.id, {
+                name: diePicker.name, type: diePicker.type, id: diePicker.id,
+                rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls)),
+                skillDice: diePicker.skill, profDice: diePicker.proficiency, flag: Math.random()
+            }));
         });
-
+        saveState(Object.fromEntries(results));
+        setShowResult(true);
         setUpdate(update + 1);
         callBack();
-        
+
     }
 
     const sortFunc = (res1, res2) => {
@@ -94,24 +106,59 @@ const Roller = ({ diePickers, callBack, showResult }) => {
     };
 
     useEffect(() => {
-    }, [diePickers, results, update]);
+        const fetchResults = () => {
+            setLockOut(true);
+            setWaiting(true);
+            getState().then((apiResult) => {
+                console.log("API Result entries");
+                console.log(Object.entries(apiResult));
+                if (apiResult.size !== 0) {
+                    setResults(new Map(Object.entries(apiResult)));
+                    setShowResult(true);
+                    console.log("Results found in storage");
+                    console.log(results);
+                    callBack();
+                } else {
+                    console.log("No results found in storage");
+                    setLockOut(false);
+                }
+                setWaiting(false);
+            });
+        };
 
+        if (useStorage && !lockOut) {
+            if (results.size === 0) {
+                fetchResults();
+            }
+        }
+    }, [diePickers, results, update, showResult, showResultInit, useStorage, lockOut, callBack]);
+
+
+    if (waiting) {
+        return (
+            <div>
+                <div>
+                    <p>Waiting for results...</p>
+                </div>
+            </div>
+        );
+    }
     if (showResult) {
         return (
             <div>
                 <div>
-                {Array.from(results.values()).sort(sortFunc).map((result) => (
-                    
-                    <Result result={result} key={result.id}></Result>
-                    
-                ))}
+                    {Array.from(results.values()).sort(sortFunc).map((result) => (
+
+                        <Result result={result} key={result.id}></Result>
+
+                    ))}
                 </div>
             </div>
         );
-    } else {
+    } else if (!useStorage) {
         return (
             <div>
-            <button className='button' onClick={rollDice}>Roll</button>
+                <button className='button' onClick={rollDice}>Roll</button>
             </div>
         );
     }
