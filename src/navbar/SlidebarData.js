@@ -6,7 +6,7 @@ import * as AiIcons from "react-icons/ai";
 export const SidebarData = [
   {
     title: "Vigilance",
-    path: "/",
+    path: "/vig",
     icon: <AiIcons.AiFillAlert />,
     cName: "nav-text"
   },

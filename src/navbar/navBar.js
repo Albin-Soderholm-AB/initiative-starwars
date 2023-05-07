@@ -51,10 +51,10 @@ export default function Navbar() {
               );
             })}
             <li key={-1} className="nav-text">
-              <a href={window.location.pathname} onClick={() => saveState({})}>
+              <button onClick={() => saveState({}).then(() => window.location.reload())}>
                 {<AiIcons.AiOutlineClear />}
                 <span>Clear</span>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>

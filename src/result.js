@@ -36,7 +36,7 @@ const Result = ({ result }) => {
                 {result.rolls.map((value, index) => (
 
                     // img tag that displays the advantage image
-                    <div className='displayDice'><img src={nameMap[index]} alt={nameMap[index]}></img>: {value}</div>
+                    <div className='displayDice' key={index}><img src={nameMap[index]} alt={nameMap[index]}></img>: {value}</div>
                     
                 ))}
             
