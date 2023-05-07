@@ -22,8 +22,8 @@ const Page = ( { cool, useStorage=false } ) => {
 
 
 
-    const callBack = useCallback((id, skill, proficiency, boost, name, type) => {
-        setDiePickers(diePickers.set(id, { id: id, skill: skill, proficiency: proficiency, boost: boost, name: name, type: type }));
+    const callBack = useCallback((id, ability, proficiency, boost, name, type) => {
+        setDiePickers(diePickers.set(id, { id: id, ability: ability, proficiency: proficiency, boost: boost, name: name, type: type }));
     }, [diePickers]);
 
     const rollCallBack = useCallback(() => {
@@ -48,11 +48,11 @@ const Page = ( { cool, useStorage=false } ) => {
                 <DiePicker callBack={callBack} show={showPickers} id="6" initName="Bad 6" />
 
                 {cool && playerCoolVals.map((val, index) => { return (
-                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} key={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
+                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} key={index+10} initName={val[2]} initAbility={val[0]} initProf={val[1]} />
                 )})}
 
                 {!cool && playerVals.map((val, index) => { return (
-                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} key={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
+                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} key={index+10} initName={val[2]} initAbility={val[0]} initProf={val[1]} />
                 )})}
             </div>
         </div>

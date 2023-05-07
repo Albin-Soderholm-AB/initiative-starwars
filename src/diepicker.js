@@ -1,10 +1,10 @@
-// react functional component called DiePicker with two state variables, skill and proficiency
+// react functional component called DiePicker with two state variables, ability and proficiency
 
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, initEnv=0, initType="enemy" }) => {
-    const [skill, setSkill] = useState(initSkill);
+const DiePicker = ({ callBack, id, show, initName, initAbility=0, initProf=0, initEnv=0, initType="enemy" }) => {
+    const [ability, setAbility] = useState(initAbility);
     const [proficiency, setProficiency] = useState(initProf);
     const [boost, setBoost] = useState(initEnv);
     const [name, setName] = useState(initName);
@@ -12,12 +12,12 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
     const [showBoostDice, setShowBoostDice] = useState(false);
 
     useEffect(() => {
-        callBack(id, skill, proficiency, boost, name, type);
-    }, [skill, proficiency, boost, name, id, callBack, type]);
+        callBack(id, ability, proficiency, boost, name, type);
+    }, [ability, proficiency, boost, name, id, callBack, type]);
 
     // two inputs that increment the state variables 
-    const incrementSkill = (val) => {
-        setSkill(skill + val);
+    const incrementAbility = (val) => {
+        setAbility(ability + val);
     }
 
     const incrementProficiency = (val) => {
@@ -39,9 +39,9 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
                 <input type="checkbox" checked={type === "ally"} onClick={(event) => event.stopPropagation()} onChange={e => setType(e.currentTarget.checked ? "ally" : initType)}></input>
             </div>
             <div className='buttonPanel'>
-                <p>Skill: {skill}</p>
-                <button className='button' onClick={e => incrementSkill(-1)}>-</button>
-                <button className='button' onClick={e => incrementSkill(1)}>+</button>
+                <p>Ability: {ability}</p>
+                <button className='button' onClick={e => incrementAbility(-1)}>-</button>
+                <button className='button' onClick={e => incrementAbility(1)}>+</button>
             </div>
             <div className='buttonPanel'>
                 <p>Proficiency: {proficiency}</p>
