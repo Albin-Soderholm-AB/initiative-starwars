@@ -28,7 +28,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
 
     const skillMap = [blank, success, success, [success, success], advantage, advantage, [success, advantage], [advantage, advantage]];
     const proficiencyMap = [blank, success, success, [success, success], [success, success], advantage, [success, advantage], [success, advantage], [success, advantage], [advantage, advantage], [advantage, advantage], triumph];
-
+    const boostMap = [success, [advantage, advantage], [advantage, success], blank, blank, advantage];
 
     const mapSkillToSwDice = (dieRolls) => {
         return dieRolls.map(v => skillMap[v]).flat();
@@ -38,13 +38,21 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
         return dieRolls.map(v => proficiencyMap[v]).flat();
     };
 
-    const calcCount = (outcome1, outcome2) => {
+    const mapBoostToSwDice = (dieRolls) => {
+        return dieRolls.map(v => boostMap[v]).flat();
+    };
+
+    const calcCount = (outcome1, outcome2, outcome3) => {
         let count = [0, 0, 0, 0];
         for (const v of outcome1) {
             count[v] = count[v] + 1;
         }
 
         for (const v of outcome2) {
+            count[v] = count[v] + 1;
+        }
+
+        for (const v of outcome3) {
             count[v] = count[v] + 1;
         }
 
@@ -59,8 +67,9 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
         Array.from(diePickers.values()).forEach((diePicker) => {
             let skillRolls = [];
             let proficiencyRolls = [];
+            let boostRolls = [];
 
-            if (diePicker.skill === 0 && diePicker.proficiency === 0) {
+            if (diePicker.skill === 0 && diePicker.proficiency === 0 && diePicker.boost === 0) {
                 return;
             }
 
@@ -70,11 +79,14 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
             for (let i = 0; i < diePicker.proficiency; i++) {
                 proficiencyRolls.push(Math.floor(Math.random() * 12));
             }
+            for (let i = 0; i < diePicker.boost; i++) {
+                boostRolls.push(Math.floor(Math.random() * 6));
+            }
 
             setResults(results.set(diePicker.id, {
                 name: diePicker.name, type: diePicker.type, id: diePicker.id,
-                rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls)),
-                skillDice: diePicker.skill, profDice: diePicker.proficiency, flag: Math.random()
+                rolls: calcCount(mapSkillToSwDice(skillRolls), mapProfToSwDice(proficiencyRolls), mapBoostToSwDice(boostRolls)),
+                skillDice: diePicker.skill, profDice: diePicker.proficiency, boostDice: diePicker.boost
             }));
         });
         saveState(Object.fromEntries(results));

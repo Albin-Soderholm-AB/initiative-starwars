@@ -9,12 +9,6 @@ import Navbar from './navbar/navBar';
 
 function App() {
 
-  // state to keep track of the skill and proficiency and name for multiple diepickers
-
-  // state map from id to an object with skill, proficiency, and name
-  
-
-
   return (
     <div className="App">
       <header className="App-header">

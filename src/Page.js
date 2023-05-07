@@ -1,6 +1,7 @@
 /* Empty react component */
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import DiePicker from './diepicker';
 import Roller from './roller';
@@ -8,17 +9,21 @@ import Roller from './roller';
 
 const Page = ( { cool, useStorage=false } ) => {
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [diePickers, setDiePickers] = useState(new Map());
 
     const [showPickers, setShowPickers] = useState(true);
+
+    const [showPlayers, setShowPlayers] = useState(false);
 
     const playerVals = [[3, 0, "Pezzu"], [2, 0, "AR5-D2"], [2, 0, "Frax Passel"], [1, 0, "Thomps"], [3, 1, "Jaku Adras"]];
     const playerCoolVals = [[1, 0, "Pezzu"], [1, 0, "AR5-D2"], [3, 0, "Frax Passel"], [2, 1, "Thomps"], [2, 0, "Jaku Adras"]];
 
 
 
-    const callBack = useCallback((id, skill, proficiency, name, type) => {
-        setDiePickers(diePickers.set(id, { id: id, skill: skill, proficiency: proficiency, name: name, type: type }));
+    const callBack = useCallback((id, skill, proficiency, boost, name, type) => {
+        setDiePickers(diePickers.set(id, { id: id, skill: skill, proficiency: proficiency, boost: boost, name: name, type: type }));
     }, [diePickers]);
 
     const rollCallBack = useCallback(() => {
@@ -26,6 +31,7 @@ const Page = ( { cool, useStorage=false } ) => {
     }, []);
 
     useEffect(() => {
+        setShowPlayers(searchParams.get("showPlayers"));
     }, [showPickers, diePickers]);
 
     return (
@@ -42,11 +48,11 @@ const Page = ( { cool, useStorage=false } ) => {
                 <DiePicker callBack={callBack} show={showPickers} id="6" initName="Bad 6" />
 
                 {cool && playerCoolVals.map((val, index) => { return (
-                    <DiePicker callBack={callBack} initType="player" show={false} id={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
+                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
                 )})}
 
                 {!cool && playerVals.map((val, index) => { return (
-                    <DiePicker callBack={callBack} initType="player" show={false} id={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
+                    <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} initName={val[2]} initSkill={val[0]} initProf={val[1]} />
                 )})}
             </div>
         </div>

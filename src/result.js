@@ -49,6 +49,7 @@ const Result = ({ result }) => {
             <div className='dieLine'>
                 <div className='displayDice'>Skill: {result.skillDice}</div>
                 <div className='displayDice'>Proficiency: {result.profDice}</div>
+                {result.boostDice > 0 && <div className='displayDice'>Boost: {result.boostDice}</div>}
             </div>
             </div>}
         </div>
