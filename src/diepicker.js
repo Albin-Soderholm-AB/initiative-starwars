@@ -36,7 +36,7 @@ const DiePicker = ({ callBack, id, show, initName, initSkill=0, initProf=0, init
         <div className='diePicker'>
             <div className="metainfo" onClick={() => setShowBoostDice(!showBoostDice)}>
                 <p><input type="text" value={name} onClick={(event) => event.stopPropagation()} onChange={e => setName(e.currentTarget.value)}></input></p>
-                <input type="checkbox" checked={type === "ally"} onClick={(event) => event.stopPropagation()} onChange={e => setType(e.currentTarget.checked ? "ally" : "enemy")}></input>
+                <input type="checkbox" checked={type === "ally"} onClick={(event) => event.stopPropagation()} onChange={e => setType(e.currentTarget.checked ? "ally" : initType)}></input>
             </div>
             <div className='buttonPanel'>
                 <p>Skill: {skill}</p>
