@@ -9,7 +9,7 @@ import Roller from './roller';
 
 const Page = ( { cool, useStorage=false } ) => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const [diePickers, setDiePickers] = useState(new Map());
 
@@ -32,7 +32,7 @@ const Page = ( { cool, useStorage=false } ) => {
 
     useEffect(() => {
         setShowPlayers(searchParams.get("showPlayers"));
-    }, [showPickers, diePickers]);
+    }, [showPickers, diePickers, searchParams]);
 
     return (
         <div>
