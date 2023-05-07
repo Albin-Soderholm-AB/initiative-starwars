@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 // DATA FILE
 import { SidebarData } from "./SlidebarData";
 
+import { saveState } from "../api/api";
+
 // STYLES
 import "./Navbar.css";
 
@@ -48,6 +50,12 @@ export default function Navbar() {
                 </li>
               );
             })}
+            <li key={-1} className="nav-text">
+              <a href={window.location.pathname} onClick={() => saveState({})}>
+                {<AiIcons.AiOutlineClear />}
+                <span>Clear</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </IconContext.Provider>

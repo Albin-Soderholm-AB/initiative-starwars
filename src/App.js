@@ -25,9 +25,10 @@ function App() {
             <Route path="/cool" element={<Page cool></Page>}>
 
             </Route>
-            <Route path="/" element={<Page></Page>}>
+            <Route path="/vig" element={<Page></Page>}>
             </Route>
             <Route path="/shared" element={<Page useStorage></Page>}></Route>
+            <Route path="/" element={<Page useStorage></Page>}></Route>
           </Routes>
         </BrowserRouter>
 
