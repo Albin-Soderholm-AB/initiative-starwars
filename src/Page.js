@@ -40,12 +40,12 @@ const Page = ( { cool, useStorage=false } ) => {
                 <Roller diePickers={diePickers} callBack={rollCallBack} showResultInit={!showPickers} useStorage={useStorage} />
             </div>
             <div className="DiePickerGrid">
-                <DiePicker callBack={callBack} show={showPickers} id="1" initName="Bad 1" />
-                <DiePicker callBack={callBack} show={showPickers} id="2" initName="Bad 2" />
-                <DiePicker callBack={callBack} show={showPickers} id="3" initName="Bad 3" />
-                <DiePicker callBack={callBack} show={showPickers} id="4" initName="Bad 4" />
-                <DiePicker callBack={callBack} show={showPickers} id="5" initName="Bad 5" />
-                <DiePicker callBack={callBack} show={showPickers} id="6" initName="Bad 6" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="1" initName="Bad 1" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="2" initName="Bad 2" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="3" initName="Bad 3" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="4" initName="Bad 4" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="5" initName="Bad 5" />
+                <DiePicker callBack={callBack} show={showPickers && !useStorage} id="6" initName="Bad 6" />
 
                 {cool && playerCoolVals.map((val, index) => { return (
                     <DiePicker callBack={callBack} initType="player" show={showPlayers && showPickers} id={index+10} key={index+10} initName={val[2]} initAbility={val[0]} initProf={val[1]} />
