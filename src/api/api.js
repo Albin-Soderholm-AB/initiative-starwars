@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const url = "https://storestate.azurewebsites.net/api/savestate?code=jfncCmRvRqXj2WWnr-g1vMQiTzFgTX2HSRRhhvt4xMigAzFu5z1mmw==&id=12345&partitionKeyValue=id";
+const url = "https://storestate.azurewebsites.net/api/savestate?code=jfncCmRvRqXj2WWnr-g1vMQiTzFgTX2HSRRhhvt4xMigAzFu5z1mmw==&id=12345";
 
 export const saveState = async (state) => {
     state["id"] = "12345";
