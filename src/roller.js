@@ -125,7 +125,8 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
                 console.log("API Result entries");
                 console.log(Object.entries(apiResult));
                 if (apiResult.size !== 0) {
-                    setResults(new Map(Object.entries(apiResult)));
+                    let filteredResult = Object.entries(apiResult).filter(entry => entry[0] !== "id");
+                    setResults(new Map(filteredResult));
                     setShowResult(true);
                     console.log("Results found in storage");
                     console.log(results);
@@ -160,7 +161,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
             <div>
                 <div>
                     {Array.from(results.values()).sort(sortFunc).map((result) => (
-
                         <Result result={result} key={result.id}></Result>
 
                     ))}

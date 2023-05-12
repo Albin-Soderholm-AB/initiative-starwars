@@ -2,9 +2,10 @@
 
 import axios from "axios";
 
-const url = "https://storestate.azurewebsites.net/api/savestate?code=jfncCmRvRqXj2WWnr-g1vMQiTzFgTX2HSRRhhvt4xMigAzFu5z1mmw==";
+const url = "https://storestate.azurewebsites.net/api/savestate?code=jfncCmRvRqXj2WWnr-g1vMQiTzFgTX2HSRRhhvt4xMigAzFu5z1mmw==&id=12345&partitionKeyValue=id";
 
 export const saveState = async (state) => {
+    state["id"] = "12345";
     console.log(state);
     try {
         const response = await axios.post(url, state);
