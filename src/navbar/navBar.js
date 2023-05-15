@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // ICONS
 import * as FaIcons from "react-icons/fa"; //Now i get access to all the icons
@@ -15,10 +15,8 @@ import { SidebarData } from "./SlidebarData";
 
 import { saveState } from "../api/api";
 
-import { Nav, Dropdown, DropdownButton, Button } from 'react-bootstrap';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import { InteractionStatus } from "@azure/msal-browser"; 
-import { loginRequest, b2cPolicies } from '../authConfig';
+import { loginRequest } from '../authConfig';
 
 // STYLES
 import "./Navbar.css";
@@ -28,7 +26,7 @@ export default function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const { instance, inProgress } = useMsal();
+  const { instance } = useMsal();
   let activeAccount;
 
   if (instance) {
@@ -44,25 +42,15 @@ export default function Navbar() {
       .catch((error) => console.log(error));
   };
 
-  const handleLoginRedirect = () => {
-    instance.loginRedirect(loginRequest).catch((error) => console.log(error));
-  };
-
-  const handleLogoutRedirect = () => {
-    instance.logoutRedirect();
-  };
-
   const handleLogoutPopup = () => {
     instance.logoutPopup({
       mainWindowRedirectUri: '/', // redirects the top level app after logout
     });
   };
 
-  const handleProfileEdit = () => {
-    if (inProgress === InteractionStatus.None) {
-      instance.acquireTokenRedirect(b2cPolicies.authorities.editProfile);
-    }
-  };
+  useEffect(() => {
+    console.log("Active account: ", activeAccount);
+  }, [activeAccount]);
 
   return (
     <>
@@ -80,7 +68,7 @@ export default function Navbar() {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-
+            <AuthenticatedTemplate>
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
@@ -91,45 +79,27 @@ export default function Navbar() {
                 </li>
               );
             })}
-            <li key={-1} className="nav-text">
-              <button onClick={() => saveState({}).then(() => window.location.reload())}>
-                {<AiIcons.AiOutlineClear />}
-                <span>Clear</span>
-              </button>
-            </li>
+            </AuthenticatedTemplate>
             <AuthenticatedTemplate>
-              <Nav.Link className="navbarButton" href="/todolist">
-                Todolist
-              </Nav.Link>
-              <div className="collapse navbar-collapse justify-content-end">
-                <Button variant="info" onClick={handleProfileEdit} className="profileButton">
-                  Edit Profile
-                </Button>
-
-                <DropdownButton
-                  variant="warning"
-                  drop="start"
-                  title={activeAccount && activeAccount.username ? activeAccount.username : 'Unknown'}
-                >
-                  <Dropdown.Item as="button" onClick={handleLogoutPopup}>
-                    Sign out using Popup
-                  </Dropdown.Item>
-                  <Dropdown.Item as="button" onClick={handleLogoutRedirect}>
-                    Sign out using Redirect
-                  </Dropdown.Item>
-                </DropdownButton>
+              <li key={-1} className="nav-text">
+                <button onClick={() => saveState({}).then(() => window.location.reload())}>
+                  {<AiIcons.AiOutlineClear />}
+                  <span>Clear</span>
+                </button>
+              </li>
+            </AuthenticatedTemplate>
+            <AuthenticatedTemplate>
+              <div className="nav-text">
+                <button onClick={handleLogoutPopup}>
+                  <span>Sign out</span>
+                </button>
               </div>
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
-              <div className="collapse navbar-collapse justify-content-end">
-                <DropdownButton variant="secondary" className="ml-auto" drop="start" title="Sign In">
-                  <Dropdown.Item as="button" onClick={handleLoginPopup}>
-                    Sign in using Popup
-                  </Dropdown.Item>
-                  <Dropdown.Item as="button" onClick={handleLoginRedirect}>
-                    Sign in using Redirect
-                  </Dropdown.Item>
-                </DropdownButton>
+              <div className="nav-text">
+                <button onClick={handleLoginPopup}>
+                  <span>Sign in</span>
+                </button>
               </div>
             </UnauthenticatedTemplate>
           </ul>

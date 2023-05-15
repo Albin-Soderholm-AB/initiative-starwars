@@ -11,23 +11,8 @@ import { LogLevel } from "@azure/msal-browser";
  * To learn more about custom policies, visit: https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview
  */
 export const b2cPolicies = {
-    names: {
-        signUpSignIn: 'B2C_1_susi_v2',
-        forgotPassword: 'B2C_1_reset_v3',
-        editProfile: 'B2C_1_edit_profile_v2',
-    },
-    authorities: {
-        signUpSignIn: {
-            authority: 'https://login.microsoftonline.com/common/',
-        },
-        forgotPassword: {
-            authority: 'https://login.microsoftonline.com/common/',
-        },
-        editProfile: {
-            authority: 'https://login.microsoftonline.com/common/',
-        },
-    },
-    authorityDomain: 'https://login.microsoftonline.com/common/',
+    authorityDomain: 'https://login.microsoftonline.com/f3d7bd42-1b2a-42fa-a527-9e5ec13b8c45/',
+    signoutAuthorityDomain: 'https://login.microsoftonline.com/f3d7bd42-1b2a-42fa-a527-9e5ec13b8c45/logout',
 };
 
 
@@ -39,7 +24,7 @@ export const b2cPolicies = {
 export const msalConfig = {
     auth: {
         clientId: 'df9eef43-58e8-4246-9e3b-939e4ea9a0ff', // This is the ONLY mandatory field that you need to supply.
-        authority: b2cPolicies.authorities.signUpSignIn.authority, // Choose SUSI as your default authority.
+        authority: b2cPolicies.authorityDomain, // Choose SUSI as your default authority.
         knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
         redirectUri: '/', // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
         postLogoutRedirectUri: '/', // Indicates the page to navigate after logout.
