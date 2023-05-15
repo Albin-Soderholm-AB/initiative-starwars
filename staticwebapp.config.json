@@ -9,6 +9,24 @@
             "/css/*"
         ]
     },
+    "auth": {
+        "identityProviders": {
+            "azureActiveDirectory": {
+                "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                "registration": {
+                    "openIdIssuer": "https://login.microsoftonline.com/<TENANT_ID>",
+                    "clientIdSettingName": "AZURE_CLIENT_ID",
+                    "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+                }
+            }
+        }
+    },
+    "routes": {
+        "route": "/vig",
+        "allowedRoles": [
+            "authenticated"
+        ]
+    },
     "mimeTypes": {
         "custom": "text/html"
     }

@@ -6,10 +6,12 @@ import Page from './Page.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Navbar from './navbar/navBar';
+import { MsalProvider } from '@azure/msal-react';
 
-function App() {
+function App( { instance }) {
 
   return (
+    <MsalProvider instance={instance}>
     <div className="App">
       <header className="App-header">
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -35,6 +37,7 @@ function App() {
 
       </header>
     </div>
+    </MsalProvider>
   );
 }
 
