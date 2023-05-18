@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { PublicClientApplication, EventType } from "@azure/msal-browser";
 
 import { msalConfig } from "./authConfig.js";
+import { MsalProvider } from '@azure/msal-react';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -28,10 +29,15 @@ msalInstance.addEventCallback((event) => {
   }
 });
 
+const pca = new PublicClientApplication(msalConfig);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App instance={msalInstance} />
+    <MsalProvider instance={pca}>
+      <App />
+    </MsalProvider>
+
   </React.StrictMode>
 );
 

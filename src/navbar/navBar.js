@@ -26,8 +26,9 @@ export default function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const { instance } = useMsal();
+  const { instance, accounts, inProgress } = useMsal();
   let activeAccount;
+  const [token, setToken] = useState(null);
 
   if (instance) {
     activeAccount = instance.getActiveAccount();
@@ -39,6 +40,11 @@ export default function Navbar() {
         ...loginRequest,
         redirectUri: '/redirect',
       })
+      .then((response) => {
+        console.log("Response:");
+        console.log(response.accessToken);
+        setToken(response.accessToken);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -48,9 +54,33 @@ export default function Navbar() {
     });
   };
 
+
+
+  useEffect(() => {
+    if (inProgress === 'none' && accounts.length > 0) {
+      const request = {
+        account: accounts[0],
+        scopes: ["User.Read"]
+      };
+      // Retrieve an access token
+      instance.acquireTokenSilent(request)
+        .then(response => {
+          console.log('response', response);
+          if (response.accessToken) {
+            console.log('accessToken', response.accessToken);
+            setToken(response.accessToken);
+            return response.accessToken;
+          }
+          return null;
+        })
+        .catch(error => console.log('token error', error));
+    }
+  }, [inProgress, accounts, instance]);
+
   useEffect(() => {
     console.log("Active account: ", activeAccount);
-  }, [activeAccount]);
+    console.log("Token: ", token);
+  }, [activeAccount, token]);
 
   return (
     <>
@@ -69,16 +99,16 @@ export default function Navbar() {
               </Link>
             </li>
             <AuthenticatedTemplate>
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <a href={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </a>
-                </li>
-              );
-            })}
+              {SidebarData.map((item, index) => {
+                return (
+                  <li key={index} className={item.cName}>
+                    <a href={item.path}>
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </AuthenticatedTemplate>
             <AuthenticatedTemplate>
               <li key={-1} className="nav-text">

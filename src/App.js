@@ -6,17 +6,17 @@ import Page from './Page.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Navbar from './navbar/navBar';
-import { MsalProvider } from '@azure/msal-react';
 
-function App( { instance }) {
+
+function App({ instance }) {
 
   return (
-    <MsalProvider instance={instance}>
+
     <div className="App">
       <header className="App-header">
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-        
+
 
         <div className='title'>
           <p><a href={window.location.pathname}>Star Wars Initiative</a></p>
@@ -37,7 +37,6 @@ function App( { instance }) {
 
       </header>
     </div>
-    </MsalProvider>
   );
 }
 

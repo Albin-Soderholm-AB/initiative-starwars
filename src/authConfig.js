@@ -17,15 +17,13 @@ export const b2cPolicies = {
 
 
 /**
- * Configuration object to be passed to MSAL instance on creation. 
+ * Configuration object to be passed to MSAL instance on creation. dda7e3e4-fbe9-4502-bbc0-b6aadedd437b
  * For a full list of MSAL.js configuration parameters, visit:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
 export const msalConfig = {
     auth: {
         clientId: 'df9eef43-58e8-4246-9e3b-939e4ea9a0ff', // This is the ONLY mandatory field that you need to supply.
-        authority: b2cPolicies.authorityDomain, // Choose SUSI as your default authority.
-        knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
         redirectUri: '/', // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
         postLogoutRedirectUri: '/', // Indicates the page to navigate after logout.
         navigateToLoginRequestUrl: false, // If "true", will navigate back to the original request location before processing the auth code response.
@@ -66,6 +64,11 @@ export const msalConfig = {
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/resources-and-scopes.md
  */
 export const protectedResources = {
+    apiTodoList: {
+        endpoint: 'https://storestate.azurewebsites.net/api/savestate',
+        scopes: {
+        },
+    },
 };
 
 /**
@@ -75,4 +78,5 @@ export const protectedResources = {
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest = {
+    scopes: ["User.Read"],
 };

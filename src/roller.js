@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import Result from './result.js';
 import { saveState, getState } from './api/api.js';
 
+import { useMsal } from '@azure/msal-react';
+
 
 
 
@@ -19,6 +21,8 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     const [showResult, setShowResult] = useState(showResultInit);
 
     const [waiting, setWaiting] = useState(false);
+
+    const instance = useMsal();
 
     const blank = 3;
     const success = 1;
@@ -89,7 +93,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
                 abilityDice: diePicker.ability, profDice: diePicker.proficiency, boostDice: diePicker.boost
             }));
         });
-        saveState(Object.fromEntries(results));
+        saveState(Object.fromEntries(results), instance);
         setShowResult(true);
         setUpdate(update + 1);
         callBack();
