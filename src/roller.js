@@ -22,7 +22,9 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
 
     const [waiting, setWaiting] = useState(false);
 
-    const instance = useMsal();
+
+    const { instance, accounts, inProgress } = useMsal();
+    const [token, setToken] = useState(null);
 
     const blank = 3;
     const success = 1;
@@ -46,6 +48,27 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
         return dieRolls.map(v => boostMap[v]).flat();
     };
 
+    useEffect(() => {
+        if (inProgress === 'none' && accounts.length > 0) {
+            const request = {
+                account: accounts[0],
+                scopes: ["User.Read"]
+            };
+            // Retrieve an access token
+            instance.acquireTokenSilent(request)
+                .then(response => {
+                    console.log('response', response);
+                    if (response.idToken) {
+                        console.log('accessToken', response.idToken);
+                        setToken(response.idToken);
+                        return response.idToken;
+                    }
+                    return null;
+                })
+                .catch(error => console.log('token error', error));
+        }
+    }, [inProgress, accounts, instance]);
+
     const calcCount = (outcome1, outcome2, outcome3) => {
         let count = [0, 0, 0, 0];
         for (const v of outcome1) {
@@ -64,7 +87,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
 
     };
 
-    
+
 
     const rollDice = () => {
 
@@ -93,7 +116,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
                 abilityDice: diePicker.ability, profDice: diePicker.proficiency, boostDice: diePicker.boost
             }));
         });
-        saveState(Object.fromEntries(results), instance);
+        saveState(Object.fromEntries(results), token);
         setShowResult(true);
         setUpdate(update + 1);
         callBack();

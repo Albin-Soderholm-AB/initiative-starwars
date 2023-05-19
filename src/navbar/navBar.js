@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // ICONS
 import * as FaIcons from "react-icons/fa"; //Now i get access to all the icons
@@ -26,24 +26,13 @@ export default function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const { instance, accounts, inProgress } = useMsal();
-  let activeAccount;
-  const [token, setToken] = useState(null);
-
-  if (instance) {
-    activeAccount = instance.getActiveAccount();
-  }
+  const instance = useMsal();
 
   const handleLoginPopup = () => {
     instance
       .loginPopup({
         ...loginRequest,
         redirectUri: '/redirect',
-      })
-      .then((response) => {
-        console.log("Response:");
-        console.log(response.accessToken);
-        setToken(response.accessToken);
       })
       .catch((error) => console.log(error));
   };
@@ -53,34 +42,6 @@ export default function Navbar() {
       mainWindowRedirectUri: '/', // redirects the top level app after logout
     });
   };
-
-
-
-  useEffect(() => {
-    if (inProgress === 'none' && accounts.length > 0) {
-      const request = {
-        account: accounts[0],
-        scopes: ["User.Read"]
-      };
-      // Retrieve an access token
-      instance.acquireTokenSilent(request)
-        .then(response => {
-          console.log('response', response);
-          if (response.accessToken) {
-            console.log('accessToken', response.accessToken);
-            setToken(response.accessToken);
-            return response.accessToken;
-          }
-          return null;
-        })
-        .catch(error => console.log('token error', error));
-    }
-  }, [inProgress, accounts, instance]);
-
-  useEffect(() => {
-    console.log("Active account: ", activeAccount);
-    console.log("Token: ", token);
-  }, [activeAccount, token]);
 
   return (
     <>
