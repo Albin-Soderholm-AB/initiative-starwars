@@ -26,7 +26,7 @@ export default function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const instance = useMsal();
+  const { instance } = useMsal();
 
   const handleLoginPopup = () => {
     instance

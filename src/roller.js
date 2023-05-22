@@ -59,7 +59,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
                 .then(response => {
                     console.log('response', response);
                     if (response.idToken) {
-                        console.log('accessToken', response.idToken);
+                        console.log('idToken', response.idToken);
                         setToken(response.idToken);
                         return response.idToken;
                     }
