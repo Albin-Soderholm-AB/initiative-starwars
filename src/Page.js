@@ -1,16 +1,24 @@
 /* Empty react component */
 import React from 'react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import DiePicker from './diepicker';
 import Roller from './roller';
 
+import { useNavigate } from "react-router-dom";
+
+import SockJsClient from 'react-stomp';
 
 
 
 
 const Page = ({ cool, useStorage = false }) => {
+
+    // @ts-ignore
+    const webSocket = useRef(null);
+
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
 
@@ -36,8 +44,40 @@ const Page = ({ cool, useStorage = false }) => {
         setShowPlayers(searchParams.get("showPlayers"));
     }, [showPickers, diePickers, searchParams]);
 
+    let onConnected = () => {
+        console.log("Connected to websocket");
+    }
+
+    let onMessageReceived = (message) => {
+        console.log("Received message:");
+        console.log(message);
+        console.log(Object.keys(message));
+        console.log(Object.values(message));
+        if (Object.keys(message).length === 0) {
+            console.log("Empty message, returning!");
+            return;
+        }
+        navigate("/shared");
+    }
+
+    let sendMessage = (message) => {
+        console.log("Websocket: ", webSocket);
+        webSocket.current?.sendMessage('/topic/message', JSON.stringify(message));
+    }
+
+    const PUBSUB_URL = "http://swroller.webpubsub.azure.com";
+
     return (
         <div>
+            <SockJsClient
+                url={PUBSUB_URL}
+                topics={['*']}
+                onConnect={onConnected}
+                onDisconnect={console.log("Disconnected!")}
+                onMessage={msg => onMessageReceived(msg)}
+                debug={true}
+                ref={webSocket}
+            />
             <div className="DiePicker">
                 <Roller diePickers={diePickers} callBack={rollCallBack} showResultInit={!showPickers} useStorage={useStorage} />
             </div>
