@@ -18,6 +18,8 @@ import { saveState } from "../api/api";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from '../authConfig';
 
+import useToken from "../hooks/useToken";
+
 // STYLES
 import "./Navbar.css";
 
@@ -27,6 +29,8 @@ export default function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const { instance } = useMsal();
+
+  const token = useToken();
 
   const handleLoginPopup = () => {
     instance
@@ -73,7 +77,7 @@ export default function Navbar() {
             </AuthenticatedTemplate>
             <AuthenticatedTemplate>
               <li key={-1} className="nav-text">
-                <button onClick={() => saveState({}).then(() => window.location.reload())}>
+                <button onClick={() => saveState({}, token).then(() => window.location.reload())}>
                   {<AiIcons.AiOutlineClear />}
                   <span>Clear</span>
                 </button>

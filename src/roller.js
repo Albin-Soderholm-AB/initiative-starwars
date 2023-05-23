@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Result from './result.js';
 import { saveState, getState } from './api/api.js';
 
-import { useMsal } from '@azure/msal-react';
+import useToken from './hooks/useToken.js';
 
 
 
@@ -23,8 +23,8 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     const [waiting, setWaiting] = useState(false);
 
 
-    const { instance, accounts, inProgress } = useMsal();
-    const [token, setToken] = useState(null);
+    
+    const token = useToken();
 
     const blank = 3;
     const success = 1;
@@ -47,27 +47,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     const mapBoostToSwDice = (dieRolls) => {
         return dieRolls.map(v => boostMap[v]).flat();
     };
-
-    useEffect(() => {
-        if (inProgress === 'none' && accounts.length > 0) {
-            const request = {
-                account: accounts[0],
-                scopes: ["User.Read"]
-            };
-            // Retrieve an access token
-            instance.acquireTokenSilent(request)
-                .then(response => {
-                    console.log('response', response);
-                    if (response.idToken) {
-                        console.log('idToken', response.idToken);
-                        setToken(response.idToken);
-                        return response.idToken;
-                    }
-                    return null;
-                })
-                .catch(error => console.log('token error', error));
-        }
-    }, [inProgress, accounts, instance]);
 
     const calcCount = (outcome1, outcome2, outcome3) => {
         let count = [0, 0, 0, 0];
