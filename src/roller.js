@@ -6,6 +6,7 @@ import Result from './result.js';
 import { saveState, getState } from './api/api.js';
 
 import useToken from './hooks/useToken.js';
+import usePubSub from './hooks/usePubSub.js';
 
 
 
@@ -22,7 +23,7 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
 
     const [waiting, setWaiting] = useState(false);
 
-
+    const message = usePubSub();
     
     const token = useToken();
 
@@ -30,7 +31,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     const success = 1;
     const advantage = 2;
     const triumph = 0;
-
 
     const abilityMap = [blank, success, success, [success, success], advantage, advantage, [success, advantage], [advantage, advantage]];
     const proficiencyMap = [blank, success, success, [success, success], [success, success], advantage, [success, advantage], [success, advantage], [success, advantage], [advantage, advantage], [advantage, advantage], triumph];
@@ -65,8 +65,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
         return count;
 
     };
-
-
 
     const rollDice = () => {
 
@@ -128,14 +126,11 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
             setLockOut(true);
             setWaiting(true);
             getState().then((apiResult) => {
-                console.log("API Result entries");
-                console.log(Object.entries(apiResult));
                 if (apiResult.size !== 0) {
                     let filteredResult = Object.entries(apiResult).filter(entry => entry[0] !== "id" && !entry[0].startsWith("_"));
                     setResults(new Map(filteredResult));
                     setShowResult(true);
                     console.log("Results found in storage");
-                    console.log(results);
                     callBack();
                 } else {
                     console.log("No results found in storage");
@@ -152,6 +147,10 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
         }
     }, [diePickers, results, update, showResult, showResultInit, useStorage, lockOut, callBack]);
 
+    useEffect(() => {
+        let filteredMessage = Object.entries(message).filter(entry => entry[0] !== "id" && !entry[0].startsWith("_"));
+        setResults(new Map(filteredMessage));
+    }, [message]);
 
     if (waiting) {
         return (
@@ -182,5 +181,4 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     }
 }
 
-// export default Roller;
 export default Roller;
