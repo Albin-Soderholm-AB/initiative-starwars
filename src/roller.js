@@ -106,9 +106,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
     }
 
     const sortFunc = (res1, res2) => {
-        console.log("Sort function called");
-        console.log(res1);
-        console.log(res2);
         let rolls1 = res1.rolls;
         let rolls2 = res2.rolls;
 
@@ -134,14 +131,11 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
             setLockOut(true);
             setWaiting(true);
             getState().then((apiResult) => {
-                console.log("API Result entries");
-                console.log(Object.entries(apiResult));
                 if (apiResult.size !== 0) {
                     let filteredResult = Object.entries(apiResult).filter(entry => entry[0] !== "id" && !entry[0].startsWith("_"));
                     setResults(new Map(filteredResult));
                     setShowResult(true);
                     console.log("Results found in storage");
-                    console.log(results);
                     callBack();
                 } else {
                     console.log("No results found in storage");
@@ -159,8 +153,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
     }, [diePickers, results, update, showResult, showResultInit, useStorage, lockOut, callBack]);
 
     useEffect(() => {
-        console.log("Message received!!!");
-        console.log(Object.entries(message));
         let filteredMessage = Object.entries(message).filter(entry => entry[0] !== "id" && !entry[0].startsWith("_"));
         setResults(new Map(filteredMessage));
     }, [message]);

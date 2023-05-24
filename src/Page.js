@@ -1,27 +1,16 @@
 /* Empty react component */
 import React from 'react';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import DiePicker from './diepicker';
 import Roller from './roller';
 
-import { useNavigate } from "react-router-dom";
 
-import SockJsClient from 'react-stomp';
-
-import useWebSocket from 'react-use-websocket';
-import useToken from './hooks/useToken';
-import usePubSub from './hooks/usePubSub';
 
 
 
 const Page = ({ cool, useStorage = false }) => {
-
-    // @ts-ignore
-    const webSocket = useRef(null);
-
-    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
 
@@ -30,12 +19,6 @@ const Page = ({ cool, useStorage = false }) => {
     const [showPickers, setShowPickers] = useState(true);
 
     const [showPlayers, setShowPlayers] = useState(false);
-
-    const token = useToken();
-
-    const message = usePubSub();
-
-    
 
     const playerVals = [[3, 0, "Pezzu"], [2, 0, "AR5-D2"], [2, 0, "Frax Passel"], [1, 0, "Thomps"], [3, 1, "Jaku Adras"]];
     const playerCoolVals = [[1, 0, "Pezzu"], [1, 0, "AR5-D2"], [3, 0, "Frax Passel"], [2, 1, "Thomps"], [2, 0, "Jaku Adras"]];
@@ -52,15 +35,6 @@ const Page = ({ cool, useStorage = false }) => {
     useEffect(() => {
         setShowPlayers(searchParams.get("showPlayers"));
     }, [showPickers, diePickers, searchParams]);
-
-    useEffect(() => {
-        console.log("Message received: " + message);
-    }, [message]);
-
-    
-
-    
-
 
     return (
         <div>

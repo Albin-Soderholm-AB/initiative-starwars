@@ -12,18 +12,11 @@ const usePubSub = () => {
     }
 
     let onMessageReceived = (messageRec) => {
-        console.log("Received message:");
-        console.log(messageRec);
-        console.log(Object.keys(messageRec));
-        console.log(Object.values(messageRec));
         if (Object.keys(messageRec).length === 0) {
             console.log("Empty message, returning!");
             return;
         }
         setMessage(messageRec);
-    }
-
-    let sendMessage = (message) => {
     }
 
     const { lastJsonMessage } = useWebSocket(PUBSUB_URL, {
@@ -34,10 +27,9 @@ const usePubSub = () => {
 
       useEffect(() => {
         if (lastJsonMessage) {
-            console.log("Message received, useEffect");
             onMessageReceived(lastJsonMessage);
         } else {
-            console.log("No message received");
+            console.log("Empty message received");
         }
     }, [lastJsonMessage]);
 
