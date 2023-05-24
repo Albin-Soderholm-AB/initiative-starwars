@@ -11,21 +11,19 @@ import usePubSub from './hooks/usePubSub.js';
 
 
 
-const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lockOutInit = false }) => {
+const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) => {
 
     const [results, setResults] = useState(new Map());
 
     const [update, setUpdate] = useState(0);
 
-    const [lockOut, setLockOut] = useState(lockOutInit);
+    const [lockOut, setLockOut] = useState(false);
 
     const [showResult, setShowResult] = useState(showResultInit);
 
     const [waiting, setWaiting] = useState(false);
 
     const message = usePubSub();
-
-
     
     const token = useToken();
 
@@ -33,7 +31,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
     const success = 1;
     const advantage = 2;
     const triumph = 0;
-
 
     const abilityMap = [blank, success, success, [success, success], advantage, advantage, [success, advantage], [advantage, advantage]];
     const proficiencyMap = [blank, success, success, [success, success], [success, success], advantage, [success, advantage], [success, advantage], [success, advantage], [advantage, advantage], [advantage, advantage], triumph];
@@ -68,8 +65,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
         return count;
 
     };
-
-
 
     const rollDice = () => {
 
@@ -157,7 +152,6 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
         setResults(new Map(filteredMessage));
     }, [message]);
 
-
     if (waiting) {
         return (
             <div>
@@ -187,5 +181,4 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lock
     }
 }
 
-// export default Roller;
 export default Roller;
