@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 import SockJsClient from 'react-stomp';
 
+import useWebSocket from 'react-use-websocket';
+import useToken from './hooks/useToken';
 
 
 
@@ -28,21 +30,9 @@ const Page = ({ cool, useStorage = false }) => {
 
     const [showPlayers, setShowPlayers] = useState(false);
 
-    const playerVals = [[3, 0, "Pezzu"], [2, 0, "AR5-D2"], [2, 0, "Frax Passel"], [1, 0, "Thomps"], [3, 1, "Jaku Adras"]];
-    const playerCoolVals = [[1, 0, "Pezzu"], [1, 0, "AR5-D2"], [3, 0, "Frax Passel"], [2, 1, "Thomps"], [2, 0, "Jaku Adras"]];
+    const token = useToken();
 
-
-    const callBack = useCallback((id, ability, proficiency, boost, name, type) => {
-        setDiePickers(diePickers.set(id, { id: id, ability: ability, proficiency: proficiency, boost: boost, name: name, type: type }));
-    }, [diePickers]);
-
-    const rollCallBack = useCallback(() => {
-        setShowPickers(false);
-    }, []);
-
-    useEffect(() => {
-        setShowPlayers(searchParams.get("showPlayers"));
-    }, [showPickers, diePickers, searchParams]);
+    const PUBSUB_URL = "wss://swroller.webpubsub.azure.com/client/hubs/Hub";
 
     let onConnected = () => {
         console.log("Connected to websocket");
@@ -65,19 +55,42 @@ const Page = ({ cool, useStorage = false }) => {
         webSocket.current?.sendMessage('/topic/message', JSON.stringify(message));
     }
 
-    const PUBSUB_URL = "http://swroller.webpubsub.azure.com";
+    const { lastJsonMessage } = useWebSocket(PUBSUB_URL, {
+        onOpen: () => {
+          onConnected();
+        }
+      });
+
+    const playerVals = [[3, 0, "Pezzu"], [2, 0, "AR5-D2"], [2, 0, "Frax Passel"], [1, 0, "Thomps"], [3, 1, "Jaku Adras"]];
+    const playerCoolVals = [[1, 0, "Pezzu"], [1, 0, "AR5-D2"], [3, 0, "Frax Passel"], [2, 1, "Thomps"], [2, 0, "Jaku Adras"]];
+
+
+    const callBack = useCallback((id, ability, proficiency, boost, name, type) => {
+        setDiePickers(diePickers.set(id, { id: id, ability: ability, proficiency: proficiency, boost: boost, name: name, type: type }));
+    }, [diePickers]);
+
+    const rollCallBack = useCallback(() => {
+        setShowPickers(false);
+    }, []);
+
+    useEffect(() => {
+        setShowPlayers(searchParams.get("showPlayers"));
+    }, [showPickers, diePickers, searchParams]);
+
+    useEffect(() => {
+        if (lastJsonMessage) {
+            console.log("Message received, useEffect");
+            onMessageReceived(lastJsonMessage);
+        } else {
+            console.log("No message received");
+        }
+    }, [lastJsonMessage]);
+
+    
+
 
     return (
         <div>
-            <SockJsClient
-                url={PUBSUB_URL}
-                topics={['*']}
-                onConnect={onConnected}
-                onDisconnect={console.log("Disconnected!")}
-                onMessage={msg => onMessageReceived(msg)}
-                debug={true}
-                ref={webSocket}
-            />
             <div className="DiePicker">
                 <Roller diePickers={diePickers} callBack={rollCallBack} showResultInit={!showPickers} useStorage={useStorage} />
             </div>
