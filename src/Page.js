@@ -12,6 +12,7 @@ import SockJsClient from 'react-stomp';
 
 import useWebSocket from 'react-use-websocket';
 import useToken from './hooks/useToken';
+import usePubSub from './hooks/usePubSub';
 
 
 
@@ -32,34 +33,9 @@ const Page = ({ cool, useStorage = false }) => {
 
     const token = useToken();
 
-    const PUBSUB_URL = "wss://swroller.webpubsub.azure.com/client/hubs/Hub";
+    const message = usePubSub();
 
-    let onConnected = () => {
-        console.log("Connected to websocket");
-    }
-
-    let onMessageReceived = (message) => {
-        console.log("Received message:");
-        console.log(message);
-        console.log(Object.keys(message));
-        console.log(Object.values(message));
-        if (Object.keys(message).length === 0) {
-            console.log("Empty message, returning!");
-            return;
-        }
-        navigate("/shared");
-    }
-
-    let sendMessage = (message) => {
-        console.log("Websocket: ", webSocket);
-        webSocket.current?.sendMessage('/topic/message', JSON.stringify(message));
-    }
-
-    const { lastJsonMessage } = useWebSocket(PUBSUB_URL, {
-        onOpen: () => {
-          onConnected();
-        }
-      });
+    
 
     const playerVals = [[3, 0, "Pezzu"], [2, 0, "AR5-D2"], [2, 0, "Frax Passel"], [1, 0, "Thomps"], [3, 1, "Jaku Adras"]];
     const playerCoolVals = [[1, 0, "Pezzu"], [1, 0, "AR5-D2"], [3, 0, "Frax Passel"], [2, 1, "Thomps"], [2, 0, "Jaku Adras"]];
@@ -78,13 +54,10 @@ const Page = ({ cool, useStorage = false }) => {
     }, [showPickers, diePickers, searchParams]);
 
     useEffect(() => {
-        if (lastJsonMessage) {
-            console.log("Message received, useEffect");
-            onMessageReceived(lastJsonMessage);
-        } else {
-            console.log("No message received");
-        }
-    }, [lastJsonMessage]);
+        console.log("Message received: " + message);
+    }, [message]);
+
+    
 
     
 

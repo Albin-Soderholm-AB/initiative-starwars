@@ -6,21 +6,24 @@ import Result from './result.js';
 import { saveState, getState } from './api/api.js';
 
 import useToken from './hooks/useToken.js';
+import usePubSub from './hooks/usePubSub.js';
 
 
 
 
-const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) => {
+const Roller = ({ diePickers, callBack, showResultInit, useStorage = false, lockOutInit = false }) => {
 
     const [results, setResults] = useState(new Map());
 
     const [update, setUpdate] = useState(0);
 
-    const [lockOut, setLockOut] = useState(false);
+    const [lockOut, setLockOut] = useState(lockOutInit);
 
     const [showResult, setShowResult] = useState(showResultInit);
 
     const [waiting, setWaiting] = useState(false);
+
+    const message = usePubSub();
 
 
     
@@ -103,6 +106,9 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
     }
 
     const sortFunc = (res1, res2) => {
+        console.log("Sort function called");
+        console.log(res1);
+        console.log(res2);
         let rolls1 = res1.rolls;
         let rolls2 = res2.rolls;
 
@@ -151,6 +157,13 @@ const Roller = ({ diePickers, callBack, showResultInit, useStorage = false }) =>
             }
         }
     }, [diePickers, results, update, showResult, showResultInit, useStorage, lockOut, callBack]);
+
+    useEffect(() => {
+        console.log("Message received!!!");
+        console.log(Object.entries(message));
+        let filteredMessage = Object.entries(message).filter(entry => entry[0] !== "id" && !entry[0].startsWith("_"));
+        setResults(new Map(filteredMessage));
+    }, [message]);
 
 
     if (waiting) {
